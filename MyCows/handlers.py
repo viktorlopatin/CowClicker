@@ -47,7 +47,7 @@ async def update_cow_button_handler(query: types.CallbackQuery, state: FSMContex
 
 @router.callback_query(lambda c: c.data == "premium button")
 async def premium_cow_button_handler(query: types.CallbackQuery, state: FSMContext) -> None:
-    prices = [LabeledPrice(label="XTR", amount=100)]
+    prices = [LabeledPrice(label="XTR", amount=1)]
     msg = await query.message.answer_invoice(
         title="Collect Milk Now",
         description="Collect milk now for 1 Star",
