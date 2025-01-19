@@ -2,3 +2,9 @@
 /settings.py
 /langs.py
 /key.pem
+/db.db
+/migration/env.py
+/migration/README
+/migration/script.py.mako
+/migration/versions/fa86773e1e49_initial.py
+/alembic.ini
