@@ -52,7 +52,7 @@ class User(Base):
         self.username = username
         self.language_code = language_code
         self.datetime = datetime.now().date()
-        self.cow_datetime = datetime.now() + timedelta(minutes=3)
+        self.cow_datetime = datetime.now() + timedelta(minutes=1)
         self.milk = 0
 
     @staticmethod
