@@ -4,7 +4,7 @@ from aiogram.types import Message, LabeledPrice
 from Start.states import MainMenuStates
 from MyCows.states import MyCowsMenuStates
 from StateNavigator import state_navigator
-from models import User
+from models import User, Statistic
 from langs import f
 from MyCows.keyboards import payment_keyboard
 
@@ -73,5 +73,6 @@ async def success_payment_handler(message: Message, state: FSMContext):
 async def collect_cow_button_handler(query: types.CallbackQuery, state: FSMContext) -> None:
     user = User.get_or_create(query.message)
     user.collect_milk()
+    Statistic.collect_milk_stat()
     await query.answer(f("get milk answer", "en"), show_alert=True)
     await state_navigator.go(query.message, state)

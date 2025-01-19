@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from aiogram.types import Message
 from datetime import datetime, timedelta
 from MyCows.keyboards import step_1_keyboard, step_2_keyboard, step_3_keyboard
+from prettytable import PrettyTable
 
 from langs import f
 
@@ -99,6 +100,51 @@ class User(Base):
     def collect_milk(self):
         self.milk += 1
         self.cow_status = False
+        session.commit()
+
+
+class Statistic(Base):
+    __tablename__ = 'statistics'
+
+    id = Column(Integer, primary_key=True)
+    date = Column(DateTime)
+    collect_milk = Column(Integer, default=0)
+
+    def __init__(self, date):
+        self.date = date
+
+    @staticmethod
+    def get_or_create():
+        date = datetime.now().date()
+        stat = session.query(Statistic).filter(func.DATE(Statistic.date) == date).first()
+        if stat is None:
+            stat = Statistic(date)
+            session.add(stat)
+            session.commit()
+        return stat
+
+    @staticmethod
+    def get_stat_by_week():
+        th = ["D", "U", "Milk"]
+
+        table = PrettyTable(th)
+        date = datetime.now().date() - timedelta(days=7)
+        stats = session.query(Statistic).filter(func.DATE(Statistic.date) > date).all()
+
+        stats.reverse()
+
+        for stat in stats:
+            users = session.query(User).filter(func.DATE(User.datetime) == func.DATE(stat.date)).count()
+            table.add_row([stat.date.strftime('%m.%d'), users, stat.collect_milk])
+
+        table = "Total users: " + str(session.query(User).count()) + "\n<code>" + table.get_string() + "</code>"
+
+        return table
+
+    @staticmethod
+    def collect_milk_stat():
+        stat = Statistic.get_or_create()
+        stat.collect_milk += 1
         session.commit()
 
 

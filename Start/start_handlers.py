@@ -7,7 +7,7 @@ from Start.keyboards import get_main_keyboard
 from Start.states import MainMenuStates
 from StateNavigator import state_navigator
 from langs import f
-from models import User
+from models import User, Statistic
 
 router = Router()
 router_end = Router()
@@ -20,6 +20,13 @@ async def command_start_handler(message: Message, state: FSMContext) -> None:
     await state.set_state(MainMenuStates.main_state)
     await state_navigator.go(message, state)
 
+
+@router.message(Command(commands=["st"]))
+async def command_start_handler(message: Message, state: FSMContext) -> None:
+    user = User.get_or_create(message)
+    if user.username == "viktor_lopatin":
+        stat = Statistic.get_stat_by_week()
+        await message.answer(stat)
 
 @router_end.message(F.text)
 async def command_end_handler(message: Message, state: FSMContext) -> None:
