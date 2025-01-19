@@ -3,6 +3,7 @@
 /langs.py
 /key.pem
 /db.db
+/migration
 /migration/env.py
 /migration/README
 /migration/script.py.mako

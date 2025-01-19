@@ -50,7 +50,7 @@ async def premium_cow_button_handler(query: types.CallbackQuery, state: FSMConte
     prices = [LabeledPrice(label="XTR", amount=1)]
     msg = await query.message.answer_invoice(
         title="Collect Milk Now",
-        description="Collect milk now for 10 Start",
+        description="Collect milk now for 1 Star",
         prices=prices,
         provider_token="",
         payload="channel_support",
