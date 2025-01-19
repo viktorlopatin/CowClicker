@@ -8,3 +8,11 @@
 /migration/script.py.mako
 /migration/versions/fa86773e1e49_initial.py
 /alembic.ini
+/venv/
+/.gitignore
+/migration/
+/__pycache__/
+/Start/__pycache__/
+/MyCows/__pycache__/
+/.gitognore
+/start.sh
